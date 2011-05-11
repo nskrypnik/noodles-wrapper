@@ -1,0 +1,90 @@
+# First - clone NoodlesFramework repo
+git clone https://github.com/guyromm/NoodlesFramework noodles
+
+# Create dir for project templates
+mkdir templates
+# Create directory for static content
+mkdir static
+
+#########################
+# Create config.py file #
+#########################
+
+echo '# -*- coding: utf-8 -*-' > config.py
+echo 'import os' >> config.py
+echo '' >> config.py
+echo 'DEBUG = True' >> config.py
+echo '' >> config.py
+echo '# Specify the server port' >> config.py
+echo 'PORT = 8090' >> config.py
+echo '' >> config.py
+echo 'APP_DIR = os.getcwd()' >> config.py
+echo '' >> config.py
+echo '# Specify URL resolver module, this must contain get_map function which returnes mapper object' >> config.py
+echo '# urls.py module is default' >> config.py
+echo "URL_RESOLVER = 'urls'" >> config.py
+echo '' >> config.py
+echo '# Specify controllers modules' >> config.py
+echo "CONTROLLERS = ['controllers', 'static']" >> config.py
+echo '' >> config.py
+echo '# Specify Redis-server host there' >> config.py
+echo "REDIS_HOST = 'localhost'" >> config.py
+echo '' >> config.py
+echo '# Specify root dir for static content here' >> config.py
+echo "STATIC_ROOT = os.path.join(os.getcwd(), 'static')" >> config.py
+echo '' >> config.py
+echo '# Specify here a template directories' >> config.py
+echo 'TEMPLATE_DIRS = [' >> config.py
+echo "        os.path.join(APP_DIR, 'templates')," >> config.py
+echo '# Add here other directories if you need' >> config.py
+echo '    ]' >> config.py
+echo "" >> config.py
+echo "# Specify here mako temporary dir for precompiled templates" >> config.py
+echo "MAKO_TMP_DIR = os.path.join(APP_DIR, 'tmp/modules')" >> config.py
+echo "" >> config.py
+
+##############################################################
+# Ok, and now let's create controllers module controllers.py #
+##############################################################
+
+echo "# -*- coding: utf-8 -*-" > controllers.py
+echo "from noodles.http import Response" >> controllers.py
+echo "" >> controllers.py
+echo "def index(request):" >> controllers.py
+echo "    return Response('<h1>Hello, NoodlesFramework!</h1>')" >> controllers.py
+echo "" >> controllers.py
+
+######################################
+# Create url resolver module urls.py #
+######################################
+
+echo "# -*- coding: utf-8 -*-" > urls.py
+echo "" >> urls.py
+echo "from routes import Mapper" >> urls.py
+echo "from config import DEBUG" >> urls.py
+echo "" >> urls.py
+echo "def get_map():" >> urls.py
+echo '    " This function returns mapper object for dispatcher "' >> urls.py
+echo "    map = Mapper()" >> urls.py
+echo "    # Add routes here" >> urls.py
+echo "    map.connect('index', '/', controller='controllers', action='index')" >> urls.py
+echo "    #map.connect(None, '/route/url', controller='controllerName', action='actionName')" >> urls.py
+echo "" >> urls.py
+echo "" >> urls.py
+echo "    if DEBUG:" >> urls.py
+echo "        map.connect(None, '/static/{path_info:.*}', controller='static', action='index') #Handling static files
+" >> urls.py
+echo "    return map" >> urls.py
+echo "" >> urls.py
+
+############################################
+# Create file for start server application #
+############################################
+
+echo "# -*- coding: utf-8 -*-" > runserver.py
+echo "" >> runserver.py
+echo "from noodles.app import startapp" >> runserver.py
+echo "" >> runserver.py
+echo "if __name__ == '__main__':" >> runserver.py
+echo "    startapp()" >> runserver.py
+

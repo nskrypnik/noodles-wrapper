@@ -1,0 +1,6 @@
+[submodule "NoodlesFramework"]
+	path = NoodlesFramework
+	url = git@github.com:guyromm/NoodlesFramework.git
+[submodule "noodles"]
+	path = noodles
+	url = git@github.com:guyromm/NoodlesFramework.git
